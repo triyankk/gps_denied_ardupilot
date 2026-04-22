@@ -1,0 +1,15 @@
+[Unit]
+Description=x11vnc server for the local X display
+Wants=display-manager.service
+After=display-manager.service graphical.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStartPre=/bin/sleep 10
+ExecStart=/usr/bin/x11vnc -display :0 -auth /run/user/1000/gdm/Xauthority -forever -noxdamage -repeat -rfbport 5900 -shared
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target
